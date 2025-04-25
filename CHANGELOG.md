@@ -1,5 +1,47 @@
 # Changelog
 
+## [v2.0.0-beta.3](https://github.com/flarum/framework/compare/v2.0.0-beta.2...v2.0.0-beta.3)
+### Changed
+- (a11y) misc a11y improvements by @SychO9 [#4211]
+- allow labels of `PostStreamScrubber` to be customized by @DavideIadeluca [#4181]
+- improve extensibility of Admin Pages by @DavideIadeluca [#4200]
+- improve extensibility of `IndexPage` by @DavideIadeluca [#4182]
+- improve extensibility of `PostMeta` component by @DavideIadeluca [#4196]
+- make search debounce time extensible by @DavideIadeluca [#4172]
+- Sanitize page in `Tag` (#4170) by @rob006 (15112c2f40656db8c310945e6c7255b90570379f)
+- Codebase cleanup by @xHeaven [#4161]
+- `audit-fix` by @SychO9 (fbe7be69ef573d0d39f70454bfd02ab94857db8a)
+- increase composer job timeout by @SychO9 (fa88731fe1f4473831af6ba56b186c72924307d9)
+- optimize querying post index by @SychO9 [#4178]
+- render after first post items once by @SychO9 (973f4f6f6ba8574b9d56674df94a02f060464ca4)
+- (tags) improve extensibility of `TagHero` by @DavideIadeluca [#4198]
+- allow extending `PostPreview` content by @DavideIadeluca [#4197]
+- improve extensibility of `WelcomeHero` by @DavideIadeluca [#4199]
+- make it easier to add content after the first post by @DavideIadeluca [#4186]
+### Fixed
+- (security) Session Hijacking via Authoritative Subdomain Cookie Overwrite by @novacuum (f19007f42466ebf881307670a32d14516444ac24)
+- fixes issue with smtp non-tls connections by @luceos [#4203]
+- change condition when `unread` label is shown in Scrubber by @DavideIadeluca [#4185]
+- change starting position of `aria-posinset` by @DavideIadeluca [#4191]
+- return empty object if selected mail driver is unavailable by @DavideIadeluca [#4183]
+- (tags) resolve `a11y` warnings in Admin Frontend by @DavideIadeluca [#4184]
+- (em) skip incompatible extension updates by @SychO9 [#4177]
+- (phpstan) incompatibility with recent updates by @SychO9 (1b9ff2b6fa90a9c991b6e1d9ab5bd959802bd099)
+- (webpack) chunk module path checking fails with dotted directories by @DavideIadeluca [#4179]
+- `sendmail` driver fails by @SychO9 [#4168]
+- `suspended_until` serialized as date instead of datetime by @SychO9 [#4169]
+- messages UI/UX improvement by @SychO9 [#4173]
+- messages inconsistencies by @SychO9 [#4174]
+- prevent users from seeing their own flags by @SychO9 [#4167]
+- visual bugs by @SychO9 (97e56af2cd8e97e4ef10235d3e584d0def2afffc)
+### Added
+- (messages) messages page extensible content by @SychO9 (561e22784a547c8aa92120e0972a9cc97ac21645)
+- (pm) delete own messages by @SychO9 [#4180]
+- (pm) messages anchor link by @SychO9 [#4175]
+- actions dropdown in admin user list by @DavideIadeluca [#4188]
+- advanced admin registry extenders by @SychO9 [#4209]
+- reusable component for showing IP address by @DavideIadeluca [#4187]
+
 ## [v2.0.0-beta.2](https://github.com/flarum/framework/compare/v2.0.0-beta.1...v2.0.0-beta.2)
 ### Fixed
 - (em) incorrect extension compatibility check [#4155]
