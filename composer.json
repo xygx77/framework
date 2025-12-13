@@ -49,6 +49,7 @@
             "Flarum\\Nicknames\\": "extensions/nicknames/src",
             "Flarum\\ExtensionManager\\": "extensions/package-manager/src",
             "Flarum\\Pusher\\": "extensions/pusher/src",
+            "Flarum\\Realtime\\": "extensions/realtime/src",
             "Flarum\\Statistics\\": "extensions/statistics/src",
             "Flarum\\Sticky\\": "extensions/sticky/src",
             "Flarum\\Subscriptions\\": "extensions/subscriptions/src",
@@ -75,6 +76,7 @@
             "Flarum\\Nicknames\\Tests\\": "extensions/nicknames/tests",
             "Flarum\\ExtensionManager\\Tests\\": "extensions/package-manager/tests",
             "Flarum\\Pusher\\Tests\\": "extensions/pusher/tests",
+            "Flarum\\Realtime\\Tests\\": "extensions/realtime/tests",
             "Flarum\\Statistics\\Tests\\": "extensions/statistics/tests",
             "Flarum\\Sticky\\Tests\\": "extensions/sticky/tests",
             "Flarum\\Subscriptions\\Tests\\": "extensions/subscriptions/tests",
@@ -101,6 +103,7 @@
         "flarum/nicknames": "self.version",
         "flarum/extension-manager": "self.version",
         "flarum/pusher": "self.version",
+        "flarum/realtime": "self.version",
         "flarum/statistics": "self.version",
         "flarum/sticky": "self.version",
         "flarum/subscriptions": "self.version",
@@ -169,7 +172,8 @@
         "symfony/postmark-mailer": "^7.0",
         "symfony/translation": "^7.0",
         "symfony/yaml": "^7.0",
-        "wikimedia/less.php": "^4.1"
+        "wikimedia/less.php": "^4.1",
+        "plesk/ratchetphp": "v1.0.4"
     },
     "require-dev": {
         "mockery/mockery": "^1.5",
@@ -201,6 +205,7 @@
             "extensions/nicknames",
             "extensions/package-manager",
             "extensions/pusher",
+            "extensions/realtime",
             "extensions/statistics",
             "extensions/sticky",
             "extensions/subscriptions",
