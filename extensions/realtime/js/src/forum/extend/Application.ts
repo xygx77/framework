@@ -34,6 +34,9 @@ export default function () {
       user: null,
     };
 
+    const indexTypingEnabled = !!app.data['flarum-realtime.index-typing-indicator'];
+    const indexTypingRestrictedEnabled = !!app.data['flarum-realtime.index-typing-indicator-restricted'];
+
     // Mount the notification toast container outside the main Mithril tree.
     // This persists across reconnect cycles — only the Pusher instance and
     // its channels are rebuilt.
@@ -48,6 +51,8 @@ export default function () {
     const setupChannels = (websocket: Pusher): void => {
       app.websocket_channels.public = null;
       app.websocket_channels.user = null;
+      app.websocket_channels.indexTyping = undefined;
+      app.websocket_channels.indexTypingTags = undefined;
 
       if (app.session.user) {
         const userChannel = websocket.subscribe('private-user=' + app.session.user.id());
@@ -73,6 +78,44 @@ export default function () {
         const publicChannel = websocket.subscribe('public');
         app.websocket_channels.public = publicChannel;
         RealtimeState.notifyPublicChannelReady(publicChannel);
+      }
+
+      const bindIndexTyping = (channel: ReturnType<Pusher['subscribe']>): void => {
+        channel.bind('index-typing', (data: { id: number; typing: boolean }) => {
+          RealtimeState.indexTyping.set(data.id, data.typing);
+        });
+      };
+
+      // Ambient typing dots on the discussion list. A single shared, public,
+      // presence-only channel — one subscription per viewer regardless of how
+      // many discussions are listed, so it stays cheap at any scale. Only
+      // guest-visible discussions are surfaced here (gated server-side).
+      if (indexTypingEnabled && (app.session.user || !disallowPublicConnection)) {
+        const indexTypingChannel = websocket.subscribe('public-index-typing');
+        app.websocket_channels.indexTyping = indexTypingChannel;
+        bindIndexTyping(indexTypingChannel);
+      }
+
+      // Restricted discussions can't go on the public channel without leaking, so
+      // they're routed per restricted tag. Subscribe to the channel of each
+      // restricted tag THIS user can see — channel auth (AuthController) enforces
+      // it server-side too. Bounded by visible-restricted-tag count, not user or
+      // discussion count, so it keeps the same scale guarantee. All feed the same
+      // IndexTypingState, so list rendering is unchanged.
+      if (indexTypingRestrictedEnabled && app.session.user) {
+        // Subscribe to the index-typing channel of every tag the user can see.
+        // We can't filter to restricted tags client-side: `isRestricted` is only
+        // serialized to admins, so a normal user can't tell which of their
+        // visible tags are restricted. We don't need to — the backend only ever
+        // broadcasts restricted discussions to these channels (public ones go to
+        // the public channel), and channel auth already gates each subscription
+        // to tags the actor can see (AuthController::indexTypingTag). Channels
+        // for non-restricted tags simply stay silent. Bounded by visible-tag count.
+        app.websocket_channels.indexTypingTags = app.store.all('tags').map((tag: any) => {
+          const channel = websocket.subscribe('private-index-typing-tag=' + tag.id());
+          bindIndexTyping(channel);
+          return channel;
+        });
       }
     };
 
